@@ -2,7 +2,6 @@
 
 const fs = require('fs').promises;
 
-const CTRL_C = 3;
 const ENTER = 13;
 
 class User {
@@ -43,9 +42,7 @@ class User {
       resolve();
     };
     process.stdin.on('data', chunk => {
-      process.stdout.write('*');
       const key = chunk[0];
-      if (key === CTRL_C) done();
       if (key === ENTER) {
         process.stdout.write('\n');
         const password = Buffer.concat(input).toString();
@@ -53,7 +50,9 @@ class User {
         if (valid) this.data.password = password;
         console.log('Password:', valid ? 'is valid' : 'is not valid');
         done();
+        return;
       }
+      process.stdout.write('*');
       input.push(chunk);
     });
     return new Promise(r => {
