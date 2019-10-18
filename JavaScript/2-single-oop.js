@@ -36,6 +36,7 @@ class Input {
     process.stdout.write(prompt);
     this._resolve = null;
     this._input = [];
+
     process.stdin.on('data', chunk => {
       const key = chunk[0];
       if (key === ENTER) {
@@ -46,6 +47,7 @@ class Input {
       process.stdout.write(mask);
       this._input.push(chunk);
     });
+
     return new Promise(resolve => {
       this._resolve = resolve;
     });
@@ -78,5 +80,6 @@ const userToString = user => {
     await Database.save(user);
   }
   console.log('Password:', valid ? 'is valid' : 'is not valid');
+  console.log(userToString(user));
   process.exit(0);
 })();

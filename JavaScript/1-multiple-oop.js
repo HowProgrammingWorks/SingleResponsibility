@@ -31,16 +31,18 @@ class User {
     return password.length >= 7;
   }
 
-  async changePassword() {
+  changePassword() {
     process.stdin.setRawMode(true);
     process.stdout.write('Enter new password: ');
     let resolve = null;
     const input = [];
+
     const done = () => {
       process.stdin.removeAllListeners('data');
       process.stdin.setRawMode(false);
       resolve();
     };
+
     process.stdin.on('data', chunk => {
       const key = chunk[0];
       if (key === ENTER) {
@@ -55,6 +57,7 @@ class User {
       process.stdout.write('*');
       input.push(chunk);
     });
+
     return new Promise(r => {
       resolve = r;
     });
@@ -68,5 +71,6 @@ class User {
   console.log(`${user}`);
   await user.changePassword();
   await user.save();
+  console.log(`${user}`);
   process.exit(0);
 })();
