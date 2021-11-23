@@ -43,7 +43,7 @@ class User {
       resolve();
     };
 
-    process.stdin.on('data', chunk => {
+    process.stdin.on('data', (chunk) => {
       const key = chunk[0];
       if (key === ENTER) {
         process.stdout.write('\n');
@@ -58,7 +58,7 @@ class User {
       input.push(chunk);
     });
 
-    return new Promise(r => {
+    return new Promise((r) => {
       resolve = r;
     });
   }

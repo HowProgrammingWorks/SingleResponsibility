@@ -6,7 +6,7 @@ const config = require('./config.js');
 const Parser = require(`./${config.format}.js`);
 
 (async () => {
-  const isPasswordValid = password => password.length >= 7;
+  const isPasswordValid = (password) => password.length >= 7;
 
   const userToString = ({ name, login, email }) =>
     `User: ${login} (${name}) <${email}>`;

@@ -37,7 +37,7 @@ class Input {
     this._resolve = null;
     this._input = [];
 
-    process.stdin.on('data', chunk => {
+    process.stdin.on('data', (chunk) => {
       const key = chunk[0];
       if (key === ENTER) {
         process.stdout.write('\n');
@@ -48,7 +48,7 @@ class Input {
       this._input.push(chunk);
     });
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this._resolve = resolve;
     });
   }
@@ -61,9 +61,9 @@ class Input {
   }
 }
 
-const isPasswordValid = password => password.length >= 7;
+const isPasswordValid = (password) => password.length >= 7;
 
-const userToString = user => {
+const userToString = (user) => {
   const { name, login, email } = user;
   return `User: ${login} (${name}) <${email}>`;
 };
