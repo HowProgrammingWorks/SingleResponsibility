@@ -60,7 +60,7 @@ class Input {
   }
 }
 
-const isPasswordValid = (password) => password.length >= 7;
+const checkPasswordStrength = (password) => password.length >= 7;
 
 const userToString = (user) => {
   const { name, login, email } = user;
@@ -73,12 +73,14 @@ const main = async () => {
   const user = await Database.read(2073);
   console.log(userToString(user));
   const password = await new Input('Enter new password: ', '*');
-  const valid = isPasswordValid(password);
-  if (valid) {
+  const enough = checkPasswordStrength(password);
+  if (enough) {
     user.password = password;
     await Database.save(user);
+    console.log('Your password is strong enough');
+  } else {
+    console.log('Your password is not strong enough');
   }
-  console.log('Password:', valid ? 'is valid' : 'is not valid');
   console.log(userToString(user));
   process.exit(0);
 };

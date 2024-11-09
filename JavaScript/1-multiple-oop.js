@@ -27,7 +27,7 @@ class User {
     return `User: ${login} (${name}) <${email}>`;
   }
 
-  static isPasswordValid(password) {
+  static checkPasswordStrength(password) {
     return password.length >= 7;
   }
 
@@ -48,11 +48,14 @@ class User {
       if (key === ENTER) {
         process.stdout.write('\n');
         const password = Buffer.concat(input).toString();
-        const valid = User.isPasswordValid(password);
-        if (valid) this.data.password = password;
-        console.log('Password:', valid ? 'is valid' : 'is not valid');
-        done();
-        return;
+        const enough = User.checkPasswordStrength(password);
+        if (enough) {
+          this.data.password = password;
+          console.log('Your password is strong enough');
+        } else {
+          console.log('Your password is not strong enough');
+        }
+        return void done();
       }
       process.stdout.write('*');
       input.push(chunk);
@@ -66,11 +69,13 @@ class User {
 
 // Usage
 
-(async () => {
+const main = async () => {
   const user = await User.read(2073);
   console.log(`${user}`);
   await user.changePassword();
   await user.save();
   console.log(`${user}`);
   process.exit(0);
-})();
+};
+
+main();
