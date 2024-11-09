@@ -29,7 +29,6 @@ class Database {
   }
 }
 
-
 class Input {
   constructor(prompt, mask) {
     process.stdin.setRawMode(true);
@@ -70,7 +69,7 @@ const userToString = (user) => {
 
 // Usage
 
-(async () => {
+const main = async () => {
   const user = await Database.read(2073);
   console.log(userToString(user));
   const password = await new Input('Enter new password: ', '*');
@@ -82,4 +81,6 @@ const userToString = (user) => {
   console.log('Password:', valid ? 'is valid' : 'is not valid');
   console.log(userToString(user));
   process.exit(0);
-})();
+};
+
+main();

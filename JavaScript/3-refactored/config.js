@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  format: 'json'
+  format: 'json',
 };
