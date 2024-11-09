@@ -3,6 +3,7 @@
 const fs = require('node:fs').promises;
 
 const ENTER = 13;
+const REQUIRED_LEN = 7;
 
 class User {
   constructor(id, data) {
@@ -28,7 +29,7 @@ class User {
   }
 
   static checkPasswordStrength(password) {
-    return password.length >= 7;
+    return password.length >= REQUIRED_LEN;
   }
 
   changePassword() {
@@ -70,7 +71,8 @@ class User {
 // Usage
 
 const main = async () => {
-  const user = await User.read(2073);
+  const userId = 2073;
+  const user = await User.read(userId);
   console.log(`${user}`);
   await user.changePassword();
   await user.save();

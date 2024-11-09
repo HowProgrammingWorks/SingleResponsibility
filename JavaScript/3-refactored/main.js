@@ -6,13 +6,15 @@ const config = require('./config.js');
 const parser = require(`./${config.format}.js`);
 
 const main = async () => {
-  const checkPasswordStrength = (password) => password.length >= 7;
+  const REQUIRED_LEN = 7;
+  const checkPasswordStrength = (password) => password.length >= REQUIRED_LEN;
 
   const userToString = ({ name, login, email }) =>
     `User: ${login} (${name}) <${email}>`;
 
   const db = new Database(parser);
-  const user = await db.read(2073);
+  const userId = 2073;
+  const user = await db.read(userId);
   console.log(userToString(user));
 
   const password = await new Input('Enter new password: ', '*');
